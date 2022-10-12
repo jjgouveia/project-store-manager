@@ -3,6 +3,7 @@ const Sinon = require("sinon");
 const { productModel } = require("../../../src/models");
 const { productService } = require("../../../src/services");
 const { productsFromDB, productsList } = require("../models/mocks/product.model.mock");
+const { newItem, validReq, invalidReq } = require("./mocks/products.services.mock");
 
 describe('Testa as implementações da camada de Products-Service', () => {
   describe('Leitura e validação no banco de dados', () => {
@@ -26,6 +27,19 @@ describe('Testa as implementações da camada de Products-Service', () => {
       Sinon.stub(productModel, 'listAll').resolves([productsFromDB[1]]);
       const products = await productService.getProductsById(2);
       expect(products.message).to.deep.equal(productsList[1]);
+    });
+  });
+  describe('Inserção e validação das informações', () => {
+    afterEach(() => Sinon.restore());
+    it('Não retorna erro na requisição', async () => {
+      Sinon.stub(productModel, 'insert').resolves(newItem);
+      const response = await productService.createProduct(validReq)
+      expect(response.type).to.equal(null);
+    });
+    it('Retorna erro na requisição', async () => {
+      Sinon.stub(productModel, 'insert').resolves(newItem);
+      const response = await productService.createProduct(invalidReq)
+      expect(response.type).to.equal('INVALID_NAME');
     });
   });
 });

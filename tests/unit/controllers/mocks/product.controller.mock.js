@@ -13,7 +13,15 @@ const listControllerMock = [
   }
 ];
 
+const resultInsert = [
+  {
+    "id": 1,
+    "name": "Olho de Agamotto"
+  },
+];
+
 
 module.exports = {
   listControllerMock,
+  resultInsert
 }
