@@ -1,7 +1,7 @@
 const listControllerMock = [
   {
-    id: 1,
-    name: "Martelo de Thor"
+    "id": 1,
+    "name": "Martelo de Thor"
   },
   {
     "id": 2,

@@ -28,7 +28,12 @@ const productsList = [
   }
 ];
 
+const newProduct = {
+  "name": "Rompe-Tormentas"
+}
+
 module.exports = {
   productsFromDB,
   productsList,
+  newProduct,
 }
