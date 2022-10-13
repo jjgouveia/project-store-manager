@@ -17,8 +17,8 @@ const listById = async (id) => {
   const [request] = await connection.execute(
   `SELECT
       s.date AS date, s_p.product_id AS productId, s_p.quantity AS quantity
-      FROM StoreManager.sales_products AS s_p
-      INNER JOIN StoreManager.sales as s
+      FROM sales_products AS s_p
+      INNER JOIN sales as s
       ON s_p.sale_id = s.id
       WHERE s.id = ?
       ORDER BY s_p.sale_id ASC, s_p.product_id ASC`,
@@ -27,7 +27,17 @@ const listById = async (id) => {
   return request;
 };
 
+const insert = async (saleDate) => {
+  const [{ insertId }] = await connection.execute(
+    'INSERT INTO sales (date) VALUE (?)',
+    [saleDate],
+  );
+  console.log(insertId);
+  return insertId;
+};
+
 module.exports = {
   listAll,
   listById,
+  insert,
 };

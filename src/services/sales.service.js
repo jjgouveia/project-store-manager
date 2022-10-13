@@ -1,7 +1,8 @@
 const { salesModel } = require('../models');
+const timestamp = require('../utils/timestamp');
 const { validateId } = require('./validations/validateInputs');
 
-const getAllProducts = async () => {
+const getAllSales = async () => {
   const result = await salesModel.listAll();
 
   if (!result.length) return { type: null, message: 'There\'s no sales yet' };
@@ -9,7 +10,7 @@ const getAllProducts = async () => {
   return { type: null, message: result };
 };
 
-const getProductsById = async (id) => {
+const getSalesById = async (id) => {
   const error = validateId(id);
 
   if (error.type) return error;
@@ -21,7 +22,14 @@ const getProductsById = async (id) => {
   return { type: null, message: result };
 };
 
+const newSale = async () => {
+  const currentDate = timestamp();
+  const sale = await salesModel.insert(currentDate);
+  return sale;
+};
+
 module.exports = {
-  getAllProducts,
-  getProductsById,
+  getAllSales,
+  getSalesById,
+  newSale,
 };
