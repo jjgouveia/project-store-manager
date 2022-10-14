@@ -5,7 +5,7 @@ const { validateId } = require('./validations/validateInputs');
 const getAllSales = async () => {
   const result = await salesModel.listAll();
 
-  if (!result.length) return { type: null, message: 'There\'s no sales yet' };
+  if (!result) return { type: null, message: 'There\'s no sales yet' };
 
   return { type: null, message: result };
 };
@@ -17,7 +17,7 @@ const getSalesById = async (id) => {
 
   const result = await salesModel.listById(id);
 
-  if (!result.length) return { type: 'SALE_NOT_FOUND', message: 'Sale not found' };
+  if (!result || !result.length) return { type: 'SALE_NOT_FOUND', message: 'Sale not found' };
 
   return { type: null, message: result };
 };
@@ -25,7 +25,7 @@ const getSalesById = async (id) => {
 const newSale = async () => {
   const currentDate = timestamp();
   const sale = await salesModel.insert(currentDate);
-  return sale;
+  return { type: null, message: sale };
 };
 
 module.exports = {

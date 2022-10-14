@@ -27,7 +27,7 @@ const createNewSale = async (saleInfo) => {
   if (productExists) {
     const saleId = await salesService.newSale();
     const createAllSales = saleInfo.map(async (sale) => {
-      await salesProductModel.insert({ saleId, ...sale });
+    await salesProductModel.insert({ saleId, ...sale });
     });
 
     await Promise.all(createAllSales);
