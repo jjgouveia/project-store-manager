@@ -32,7 +32,6 @@ const insert = async (saleDate) => {
     'INSERT INTO sales (date) VALUE (?)',
     [saleDate],
   );
-  console.log(insertId);
   return insertId;
 };
 

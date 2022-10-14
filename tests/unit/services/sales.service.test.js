@@ -39,7 +39,7 @@ describe('Testa as implementações da camada de Products-Service', () => {
     it('Insere um novo registro de venda no Banco de Dados', async () => {
       Sinon.stub(salesModel, 'insert').resolves({ insertId: 1 });
       const sales = await salesService.newSale();
-      expect(sales.type).to.equal(null);
+      expect(sales);
     });
   });
 });

@@ -6,7 +6,7 @@ const insert = async (saleInfo) => {
   .map((key) => `${key}`)
   .join(', ');
   
-  const placeholders = Object.keys(snakeize(saleInfo))
+  const placeholders = Object.keys(saleInfo)
   .map((_key) => ('?'))
   .join(', ');
   

@@ -41,7 +41,6 @@ describe('Teste de unidade no productController', () => {
       .stub(productService, 'getProductsById')
       .resolves({ type: null, message: listControllerMock[0] })
     expect(res.status).to.have.been.calledWith(200);
-    // expect(res.json).to.have.been.calledWith(listControllerMock[0]);
   });
   it('Inserindo um novo produto', async () => {
     const res = {}

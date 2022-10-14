@@ -31,10 +31,20 @@ const insert = async (product) => {
     );
 
     return insertId;
-  };
+};
+  
+const deleteProduct = async (id) => {
+  const request = connection.execute(
+    `DELETE FROM products
+      WHERE id = ?`,
+    [id],
+  );
+  return request;
+};
 
 module.exports = {
   listAll,
   listById,
   insert,
+  deleteProduct,
 };
