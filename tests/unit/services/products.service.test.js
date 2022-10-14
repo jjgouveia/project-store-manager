@@ -2,7 +2,7 @@ const { expect } = require("chai");
 const Sinon = require("sinon");
 const { productModel } = require("../../../src/models");
 const { productService } = require("../../../src/services");
-const { productsFromDB, productsList } = require("../models/mocks/product.model.mock");
+const { productsFromDB, productsList, productToUpdate, invalidProductIdEdit, queryExpected } = require("../models/mocks/product.model.mock");
 const { newItem, validReq, invalidReq } = require("./mocks/products.services.mock");
 
 describe('Testa as implementações da camada de Products-Service', () => {
@@ -54,8 +54,45 @@ describe('Testa as implementações da camada de Products-Service', () => {
 
     it('Retorna erro na requisição', async () => {
       Sinon.stub(productModel, 'deleteProduct').resolves(productsFromDB[0].id);
+      
       const response = await productService.deleteProduct(invalidReq)
       expect(response.type).to.equal('INVALID_VALUE');
+    });
+  });
+  describe('Atualização e validação das informações', () => {
+    afterEach(() => Sinon.restore());
+    it('Requisição bem sucedida', async () => {
+      Sinon.stub(productModel, 'update').resolves({ affectedRows: 1 });
+      Sinon.stub(productModel, 'listById').resolves(productsFromDB[0]);
+
+      const response = await productService.updateProduct(productToUpdate);
+      expect(response.type).to.equal(null);
+      expect(response.message).to.equal(productToUpdate);
+    });
+    it('Retorna erro na requisição', async () => {
+      Sinon.stub(productModel, 'update').resolves(undefined);
+      Sinon.stub(productModel, 'listById').resolves(undefined);
+
+      const response = await productService.updateProduct(invalidProductIdEdit);
+      expect(response.type).to.be.not.undefined;
+      expect(response.message).to.equal('Product not found');
+    });
+  });
+  describe('Verifica se é possível fazer uma requisição através do nome do produto', () => {
+    afterEach(() => Sinon.restore());
+    it('Busca pelo Capitão América', async () => {
+      Sinon.stub(productModel, 'findByQuery').resolves(queryExpected);
+
+      const response = await productService.queryProduct("%Cap");
+      expect(response.type).to.equal(null);
+      expect(response.message).to.equal(queryExpected);
+    });
+    it('Se resgata a lista completa se a query for vazia', async () => {
+      Sinon.stub(productModel, 'findByQuery').resolves(productsFromDB);
+
+      const response = await productService.queryProduct();
+      expect(response.type).to.equal(null);
+      expect(response.message).to.equal(productsFromDB);
     });
   });
 });

@@ -2,7 +2,7 @@ const { expect } = require("chai");
 const Sinon = require("sinon");
 const { productModel } = require("../../../src/models");
 const connection = require("../../../src/models/connection");
-const { productsFromDB, productsList, newProduct } = require("./mocks/product.model.mock");
+const { productsFromDB, productsList, newProduct, productToUpdate, queryExpected } = require("./mocks/product.model.mock");
 
 describe('Testa as implementações da camada Model', () => {
   describe('Manipulação no banco de dados', () => {
@@ -28,13 +28,28 @@ describe('Testa as implementações da camada Model', () => {
     });
   });
   describe('Verifica a deleção um item do banco de dados', () => {
-    
     afterEach(() => Sinon.restore());
     it('Deleta um produto', async () => {
       Sinon.stub(connection, "execute").resolves({ affectedRows: 1 });
 
       const result = await productModel.deleteProduct(productsFromDB[0].id);
       expect(result).to.deep.equal({ affectedRows: 1 });
+    });
+  });
+  describe('Verifica a atualização de um produto no banco de dados', () => {
+    afterEach(() => Sinon.restore());
+    it('Atualiza um produto', async () => {
+      Sinon.stub(connection, "execute").resolves([{ affectedRows: 1 }]);
+      const result = await productModel.update(productToUpdate);
+      expect(result).to.deep.equal({ affectedRows: 1 });
+    });
+  });
+  describe('Verifica é possível encontrar um produto pelo nome', () => {
+    afterEach(() => Sinon.restore());
+    it('Se encontra o "Capitão América"', async () => {
+      Sinon.stub(connection, "execute").resolves([queryExpected]);
+      const result = await productModel.findByQuery('%Cap%');
+      expect(result).to.be.deep.equal(queryExpected);
     });
   });
 });

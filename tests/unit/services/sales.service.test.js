@@ -2,7 +2,7 @@ const { expect } = require("chai");
 const Sinon = require("sinon");
 const { salesModel } = require("../../../src/models");
 const { salesService } = require("../../../src/services");
-const { salesFromDB, ResponseAllSalesById, allSalesById } = require("../models/mocks/sales.model.mock");
+const { salesFromDB, allSalesById } = require("../models/mocks/sales.model.mock");
 
 const SALE_NOT_FOUND = 'SALE_NOT_FOUND';
 
