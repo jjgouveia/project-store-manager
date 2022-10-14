@@ -54,10 +54,17 @@ const updateProduct = async (productToEdit) => {
   return { type: null, message: productToEdit };
 };
 
+const queryProduct = async (q = '') => {
+  const string = `%${q}%`;
+  const product = await productModel.findByQuery(string);
+  return { type: null, message: product };
+};
+
 module.exports = {
   getAllProducts,
   getProductsById,
   createProduct,
   deleteProduct,
   updateProduct,
+  queryProduct,
 };

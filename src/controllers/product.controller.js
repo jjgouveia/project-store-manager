@@ -44,10 +44,17 @@ const editProduct = async (req, res) => {
   return res.status(200).json(message);
 };
 
+const findProductByName = async (req, res) => {
+  const { q } = req.query;
+  const { message } = await productService.queryProduct(q);
+  return res.status(200).json(message);
+};
+
 module.exports = {
   getAllProducts,
   getProductsById,
   requestNewProduct,
   requestDelete,
   editProduct,
+  findProductByName,
 };
