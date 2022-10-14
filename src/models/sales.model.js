@@ -35,8 +35,18 @@ const insert = async (saleDate) => {
   return insertId;
 };
 
+const removeSaleRegistry = async (id) => {
+  const request = connection.execute(
+    `DELETE FROM sales
+      WHERE id = ?`,
+    [id],
+  );
+  return request;
+};
+
 module.exports = {
   listAll,
   listById,
   insert,
+  removeSaleRegistry,
 };

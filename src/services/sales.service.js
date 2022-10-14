@@ -27,7 +27,7 @@ const newSale = async () => {
   const sale = await salesModel.insert(currentDate);
   return sale;
 };
-
+ 
 module.exports = {
   getAllSales,
   getSalesById,
