@@ -12,7 +12,7 @@ describe('Testa as implementações da camada Model', () => {
       const request = await productModel.listAll();
       expect(request).to.be.deep.equal(productsList);
     });
-    it('Verifica se é possível localizar um carro através do ID', async function () {
+    it('Verifica se é possível localizar um produto através do ID', async function () {
       Sinon.stub(connection, 'execute').resolves([[productsFromDB[2]]]);
       const request = await productModel.listById(3);
       expect(request).to.be.deep.equal(productsList[2]);
@@ -25,6 +25,16 @@ describe('Testa as implementações da camada Model', () => {
       Sinon.stub(connection, 'execute').resolves([{ insertId: 1 }]);
       const request = await productModel.insert(newProduct);
       expect(request).to.equal(1);
+    });
+  });
+  describe('Verifica a deleção um item do banco de dados', () => {
+    
+    afterEach(() => Sinon.restore());
+    it('Deleta um produto', async () => {
+      Sinon.stub(connection, "execute").resolves({ affectedRows: 1 });
+
+      const result = await productModel.deleteProduct(productsFromDB[0].id);
+      expect(result).to.deep.equal({ affectedRows: 1 });
     });
   });
 });

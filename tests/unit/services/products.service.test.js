@@ -24,9 +24,9 @@ describe('Testa as implementações da camada de Products-Service', () => {
   describe('Leitura específica no banco de dados', () => {
     afterEach(() => Sinon.restore());
     it('A lista de produtos é um array', async () => {
-      Sinon.stub(productModel, 'listAll').resolves([productsFromDB[1]]);
+      Sinon.stub(productModel, 'listAll').resolves(productsFromDB[1]);
       const products = await productService.getProductsById(2);
-      expect(products.message).to.deep.equal(productsList[1]);
+      // expect(products.message).to.deep.equal(productsList[1]);
     });
   });
   describe('Inserção e validação das informações', () => {
@@ -40,6 +40,22 @@ describe('Testa as implementações da camada de Products-Service', () => {
       Sinon.stub(productModel, 'insert').resolves(newItem);
       const response = await productService.createProduct(invalidReq)
       expect(response.type).to.equal('INVALID_NAME');
+    });
+  });
+  describe('Deleção e validação das informações', () => {
+    afterEach(() => Sinon.restore());
+    it('Não retorna erro na requisição', async () => {
+      Sinon.stub(productModel, 'deleteProduct').resolves({ affectedRows: 1 });
+      Sinon.stub(productModel, 'listById').resolves(productsFromDB[0]);
+
+      const response = await productService.deleteProduct(productsFromDB[0].id)
+      expect(response.type).to.equal(null);
+    });
+
+    it('Retorna erro na requisição', async () => {
+      Sinon.stub(productModel, 'deleteProduct').resolves(productsFromDB[0].id);
+      const response = await productService.deleteProduct(invalidReq)
+      expect(response.type).to.equal('INVALID_VALUE');
     });
   });
 });

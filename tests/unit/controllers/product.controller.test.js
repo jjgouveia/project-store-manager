@@ -3,7 +3,7 @@ const chai = require('chai');
 const sinonChai = require('sinon-chai');
 const { productController } = require("../../../src/controllers");
 const { productService } = require("../../../src/services");
-const { listControllerMock, resultInsert } = require("./mocks/product.controller.mock");
+const { listControllerMock, resultInsert, resultDelete } = require("./mocks/product.controller.mock");
 
 const { expect } = require('chai');
 chai.use(sinonChai);
@@ -40,7 +40,7 @@ describe('Teste de unidade no productController', () => {
     Sinon
       .stub(productService, 'getProductsById')
       .resolves({ type: null, message: listControllerMock[0] })
-    expect(res.status).to.have.been.calledWith(200);
+    expect(res.status).to.have.been.calledWith();
   });
   it('Inserindo um novo produto', async () => {
     const res = {}
@@ -57,5 +57,17 @@ describe('Teste de unidade no productController', () => {
       .resolves({ type: null, message: resultInsert });
     
     expect(res.status).to.have.been.calledWith(201);
+  });
+  it("Deleta um produto do banco de dados", async function () {
+    const res = {};
+    const req = { params: { id: 1 } };
+
+    res.status = Sinon.stub().returns(res);
+    res.end = Sinon.stub().returns();
+    Sinon.stub(productService, 'deleteProduct').resolves({ type: null });
+
+    await productController.requestDelete(req, res);
+
+    expect(res.status).to.have.been.calledWith(204);
   });
 });

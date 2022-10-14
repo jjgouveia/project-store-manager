@@ -10,6 +10,17 @@ const productsFromDB = [
   {
     "id": 3,
     "name": "Escudo do Capitão América"
+  },
+];
+
+const deleteProductsFromDB = [
+  {
+    "id": 1,
+    "name": "Martelo de Thor"
+  },
+  {
+    "id": 2,
+    "name": "Traje de encolhimento"
   }
 ];
 
@@ -36,4 +47,5 @@ module.exports = {
   productsFromDB,
   productsList,
   newProduct,
+  deleteProductsFromDB,
 }
