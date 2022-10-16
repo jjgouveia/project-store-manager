@@ -1,6 +1,6 @@
 
 const invalidSaleRequest = [
-  { productId: 22, quantity: 2022 },
+  { productId: 99, quantity: 2022 },
 ];
 
 const requestWithoutProductId = [

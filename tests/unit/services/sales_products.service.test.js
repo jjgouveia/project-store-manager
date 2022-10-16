@@ -4,7 +4,7 @@ const { productModel } = require("../../../src/models");
 const { salesProductsService, salesService } = require("../../../src/services");
 const { invalidSaleRequest, requestWithoutProductId, requestWithoutQuantity } = require("./mocks/sales_products.mock");
 
-describe("Testes de unidade da camada sales_products", function () {
+describe("Testes de unidade da camada sales_products.services", function () {
   describe("Criação de uma venda", function () {
     it("Falha se o id for inválido", async function () {
       Sinon.stub(productModel, 'listById').resolves(undefined);

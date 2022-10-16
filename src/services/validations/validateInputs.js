@@ -17,7 +17,7 @@ const validateName = (name) => {
   return { type: null, message: '' };
 };
 
-const validateNewSale = (sale) => {
+const ensureValidateSale = (sale) => {
   const { error } = addSalesSchema.validate(sale);
   if (error) {
     return {
@@ -39,6 +39,6 @@ const validateProductUpdate = (product) => {
 module.exports = {
   validateId,
   validateName,
-  validateNewSale,
+  ensureValidateSale,
   validateProductUpdate,
 };

@@ -2,7 +2,7 @@ const { expect } = require("chai");
 const Sinon = require("sinon");
 const { salesProductModel } = require("../../../src/models");
 const connection = require("../../../src/models/connection");
-const { newSaleRequest, allSalesFromDB } = require("./mocks/sales_products.model.mock");
+const { newSaleRequest, allSalesFromDB, saleToUpdate } = require("./mocks/sales_products.model.mock");
 
 describe('Teste as implementações da camada Sales_Products - Model', () => {
   describe('Escrita', () => {
@@ -16,6 +16,12 @@ describe('Teste as implementações da camada Sales_Products - Model', () => {
       Sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
       const result = await salesProductModel.removeSaleProduct(allSalesFromDB[0].saleId);
       expect(result).to.deep.equal([{ affectedRows: 1 }]);
+    });
+    afterEach(() => Sinon.restore());
+    it('Atualiza uma venda', async () => {
+      Sinon.stub(connection, "execute").resolves([{ affectedRows: 1 }]);
+      const result = await salesProductModel.update(1, saleToUpdate);
+      expect(result).to.deep.equal({ affectedRows: 1 });
     });
   });
 });

@@ -18,7 +18,14 @@ const allSalesFromDB = [
   },
 ];
 
+const saleToUpdate = {
+  productId: 8,
+  quantity: 256
+};
+
+
 module.exports = {
   newSaleRequest,
   allSalesFromDB,
+  saleToUpdate,
 }

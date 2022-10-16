@@ -1,7 +1,8 @@
 const salesService = require('./sales.service');
 const { productModel, salesProductModel, salesModel } = require('../models');
-const { validateNewSale, validateId } = require('./validations/validateInputs');
+const { validateId, ensureValidateSale } = require('./validations/validateInputs');
 const saleModelMaks = require('../helpers/createSale');
+const updateModelMask = require('../helpers/updateSale');
 
 const validateProductId = async (ids) => {
   const productsList = await productModel.listAll();
@@ -12,7 +13,7 @@ const validateProductId = async (ids) => {
 };
 
 const validateSale = (saleInfo) => {
-  const validation = saleInfo.map((sale) => validateNewSale(sale));
+  const validation = saleInfo.map((sale) => ensureValidateSale(sale));
   const error = validation.find(({ type }) => type);
   if (error) return error;
   return { type: null, message: '' };
@@ -38,6 +39,26 @@ const createNewSale = async (saleInfo) => {
   return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
 };
 
+const updateSale = async (saleId, saleToEdit) => {
+  const error = validateSale(saleToEdit);
+  if (error.type) return error;
+
+  const productExists = await validateProductId(saleToEdit);
+  const saleExists = await productModel.listById(saleId);
+  if (!saleExists) return { type: 'SALE_NOT_FOUND', message: 'Sale not found' };
+
+  if (saleExists && productExists) {
+    const salesUpdated = saleToEdit.map(async (sale) => {
+     await salesProductModel.update(saleId, sale);
+    });
+    
+    await Promise.all(salesUpdated);
+    const result = await updateModelMask(saleId, saleToEdit);
+    return { type: null, message: result };
+  }
+  return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
+};
+
 const removeSale = async (id) => {
   const error = validateId(id);
   if (error.type) return error;
@@ -57,4 +78,5 @@ const removeSale = async (id) => {
 module.exports = {
   createNewSale,
   removeSale,
+  updateSale,
 };
