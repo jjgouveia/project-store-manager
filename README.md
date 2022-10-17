@@ -2,7 +2,7 @@
 
 ## 🔨 Desenvolvimento
 
-A proposta deste projeto era a de arquitetar e desenvolver uma API RESTfull integrada a um banco de dados MySQL, em que fosse possível utilizar endpoints para criar, exibir, atualizar e excluir (C.R.U.D.) produtos e vendas. Tudo isso utilizando o padrão arquitetural MSC (Model, Service e Controller).
+A proposta deste projeto era a de arquitetar e desenvolver uma API RESTfull integrada a um banco de dados MySQL, em que fosse possível utilizar endpoints para criar, exibir, atualizar e excluir (C.R.U.D.) de produtos e vendas. Tudo isso utilizando o padrão arquitetural MSC (Model, Service e Controller).
 
 ## 💻 Tecnologias utilizadas
 
