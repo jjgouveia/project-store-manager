@@ -12,14 +12,17 @@ A proposta deste projeto era a de arquitetar e desenvolver uma API RESTfull inte
 * chai
 * sinon
 * mocha
+* mySQL
 
 ## Lições aprendidas e/ou reforçadas
 
 * Escrever o código utilizando o padrão <em>M.S.C.</em> de arquitetura de software por camadas;
 * Fazer validações com a biblioteca JOI;
 * Criar rotas baseadas em <em>C.R.U.D.</em> e aplicar middlewares;
+* Utilzar queries SQL para as operações C.R.U.D;
 * Escrever API's RESTfull utilizando Node e Express;
 * Escrever testes assíncronos utilizando o <em>chai</em>, <em>sinon</em> e o <em>mocha</em>;
+
 
 ## 🛠 Instalação local
 
